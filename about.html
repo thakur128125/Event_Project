@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      padding: 1rem 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h1,
+    h2 {
+      color: #4CAF50;
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .testimonial {
+      background: #f1f1f1;
+      padding: 10px;
+      margin: 10px 0;
+      border-left: 4px solid #4CAF50;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>About Us</h1>
+  </header>
+  <div class="container">
+    <div class="section">
+      <h2>Who We Are</h2>
+      <p>We are a passionate team dedicated to creating unforgettable events. Our mission is to bring people together,
+        foster creativity, and deliver experiences that leave lasting memories.</p>
+    </div>
+
+    <div class="section">
+      <h2>What We Do</h2>
+      <p>We specialize in managing a wide range of events, including:</p>
+      <ul>
+        <li>Corporate events: Conferences, team-building activities.</li>
+        <li>Social events: Weddings, birthdays, anniversaries.</li>
+        <li>Cultural events: Festivals, art exhibitions, concerts.</li>
+        <li>College events: Technical competitions, cultural nights, sports fests.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Client Feedback</h2>
+      <div id="testimonials">
+        <div class="testimonial">"The event was seamless and exceeded our expectations!" - Client A</div>
+        <div class="testimonial">"A truly professional team that made our special day perfect." - Client B</div>
+        <div class="testimonial">"Amazing creativity and flawless execution. Highly recommended!" - Client C</div>
+      </div>
+      <a class="button" onclick="toggleTestimonials()">Toggle Testimonials</a>
+    </div>
+
+    <div class="section">
+      <h2>Our Previous Events</h2>
+      <p>Over the years, we've successfully organized:</p>
+      <ul>
+        <li>100+ corporate events, bringing innovation and engagement to the workplace.</li>
+        <li>50+ weddings and social gatherings, creating magical moments for our clients.</li>
+        <li>Numerous college fests that have inspired and entertained thousands of students.</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function toggleTestimonials() {
+      const testimonials = document.getElementById('testimonials');
+      if (testimonials.style.display === 'none') {
+        testimonials.style.display = 'block';
+      } else {
+        testimonials.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+
+</html>

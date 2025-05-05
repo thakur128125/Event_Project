@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>event Fest Chatbot</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: "Arial", sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      background-image: linear-gradient(to bottom right, #a7642d, #b61385);
+      background-image: url(project_chat.avif);
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .header-section {
+      text-align: center;
+      color: white;
+      padding: 20px;
+      background: rgba(110, 191, 197, 0.7);
+      width: 100%;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .header-section h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .header-section p {
+      font-size: 1.2rem;
+      margin: 0;
+    }
+
+    /* Chatbot Styles */
+    .chatbot {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 360px;
+      background: rgba(255, 255, 255, 0.95);
+      border: 2px solid #6c63ff;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .chatbot-header {
+      background: linear-gradient(45deg, #6c63ff, #8c8aff);
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+
+    .chatbot-messages {
+      height: 400px;
+      overflow-y: auto;
+      padding: 15px;
+      background: #fafafa;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .chatbot-messages p {
+      margin: 0;
+      padding: 10px;
+      border-radius: 12px;
+    }
+
+    .bot-message {
+      background: #e3e8ff;
+      color: #3a5657;
+      align-self: flex-start;
+    }
+
+    .user-message {
+      background: #6c63ff;
+      color: white;
+      align-self: flex-end;
+    }
+
+    .chatbot-input {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+      background: #f8f9fa;
+    }
+
+    .chatbot-input input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+
+    .chatbot-input button {
+      background: linear-gradient(45deg, #6c63ff, #8c8aff);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      padding: 12px;
+      cursor: pointer;
+    }
+
+    .chatbot-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(45deg, #6c63ff, #8c8aff);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      cursor: pointer;
+      font-size: 2rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header-section">
+    <h1>Welcome to the Fest Chatbot 🎉</h1>
+    <p>
+      Interact with our <b>"ChatPuppy"</b> to learn about the events, register,
+      or ask for assistance.
+    </p>
+    <p>
+      <strong>Try asking:</strong> "What are the events?", "Where to register?
+    </p>
+  </div>
+
+  <button class="chatbot-toggle" onclick="toggleChatbot()">💬</button>
+
+  <div class="chatbot" id="chatbot">
+    <div class="chatbot-header">Chat with our Fest Bot!</div>
+    <div class="chatbot-messages" id="chatMessages"></div>
+    <div class="chatbot-input">
+      <input type="text" id="userInput" placeholder="Type a message..." />
+      <button onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+
+  <script>
+    const botResponses = {
+      hii: ["Hello! 👋 I am ChatPuppy... I am here to assist you!"],
+      events: [
+        "Our fest includes cultural, technical, and sports events! 🎉",
+      ],
+      register: ["You can register through the 'Registration' page! 📝"],
+      feedback: ["Comment your valuable feedback!!"],
+      fallback: [
+        "I'm ChatPuppy... I am here to assist! 🤖 Ask me about the fest.",
+      ],
+      fallback: [
+        "I'm ChatPuppy... I am here to assist! 🤖 Ask me about the fest.",
+    ]
+    };
+
+    let lastResponse = "";
+
+    function toggleChatbot() {
+      const chatbot = document.getElementById("chatbot");
+      chatbot.style.display =
+        chatbot.style.display === "none" ? "flex" : "none";
+    }
+
+    function generateBotResponse(input) {
+      let responseKey = "fallback";
+      let link = null;
+
+      if (input.includes("hii")) {
+        responseKey = "hii";
+      } else if (input.includes("events")) {
+        responseKey = "events";
+        link = "project_events.html";
+      } else if (input.includes("register")) {
+        responseKey = "register";
+        link = "project_registration.php";
+      } else if (input.includes("quiz")) {
+        responseKey = "quiz";
+        link = "quiz.html";
+      } else if (input.includes("feedback")) {
+        responseKey = "feedback";
+        link = "project_feedback.html";
+      } else if (input.includes("football")) {
+        responseKey = "football";
+      }
+
+      const responses = botResponses[responseKey];
+      const message =
+        responses.find((res) => res !== lastResponse) || responses[0];
+      lastResponse = message;
+
+      return { message, link };
+    }
+
+    function sendMessage() {
+      const userInput = document.getElementById("userInput");
+      const chatMessages = document.getElementById("chatMessages");
+
+      if (userInput.value.trim() !== "") {
+        const userMessage = document.createElement("p");
+        userMessage.classList.add("user-message");
+        userMessage.textContent = userInput.value;
+        chatMessages.appendChild(userMessage);
+
+        const botResponse = generateBotResponse(
+          userInput.value.toLowerCase()
+        );
+
+        setTimeout(() => {
+          const botMessage = document.createElement("p");
+          botMessage.classList.add("bot-message");
+          botMessage.textContent = botResponse.message;
+          chatMessages.appendChild(botMessage);
+
+          // Add a clickable link only if the botResponse includes a link
+          if (botResponse.link) {
+            const linkElement = document.createElement("a");
+            linkElement.href = botResponse.link;
+            linkElement.target = "_blank";
+
+            // Set link text dynamically based on responseKey
+            if (botResponse.message.includes("events")) {
+              linkElement.textContent = "Click here to view events!";
+            } else if (botResponse.message.includes("register")) {
+              linkElement.textContent = "Click here to register!";
+            } else if (botResponse.message.includes("quiz")) {
+              linkElement.textContent = "Click here to play the quiz!";
+            } else if (botResponse.message.includes("feedback")) {
+              linkElement.textContent = "Click here to leave feedback!";
+            } else {
+              linkElement.textContent = "Click here for more information!";
+            }
+
+            // Styling for the link
+            linkElement.style.color = "#6c63ff";
+            linkElement.style.display = "block";
+            linkElement.style.marginTop = "5px";
+            chatMessages.appendChild(linkElement);
+          }
+
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 1000);
+
+        userInput.value = "";
+      }
+    }
+  </script>
+</body>
+
+</html>

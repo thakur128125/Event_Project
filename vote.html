@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Poll</title>
+  <style>
+    /* Basic Styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url(voteimg.jpg);
+      /* Adjust the path if needed */
+      background-size: cover;
+      /* Ensure the image covers the full viewport */
+      background-position: center;
+      /* Center the image */
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #poll {
+      background-color: rgba(255, 255, 255, 0.8);
+      /* Slightly transparent background for readability */
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      text-align: center;
+      width: 80%;
+      max-width: 500px;
+    }
+
+    h2 {
+      color: #333;
+      font-size: 2em;
+      margin-bottom: 15px;
+    }
+
+    p {
+      color: #666;
+      font-size: 1.1em;
+      margin-bottom: 20px;
+    }
+
+    .form-check {
+      margin: 15px 0;
+      font-size: 1.2em;
+    }
+
+    .form-check-input {
+      margin-right: 10px;
+    }
+
+    .form-check-label {
+      color: #333;
+    }
+
+    button {
+      padding: 12px 20px;
+      background-color: #6a11cb;
+      color: #fff;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #4e0c96;
+    }
+
+    .mt-4 {
+      margin-top: 20px;
+    }
+
+    #pollResult {
+      display: none;
+      margin-top: 20px;
+    }
+
+    #pollResult p {
+      font-size: 1.1em;
+      color: #333;
+    }
+
+    /* Styling the bar chart */
+    .bar-container {
+      width: 100%;
+      height: 30px;
+      background-color: #f1f1f1;
+      border-radius: 5px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .bar {
+      height: 100%;
+      background-color: #6a11cb;
+      text-align: center;
+      color: white;
+      font-weight: bold;
+      line-height: 30px;
+      /* Vertically center the text */
+      border-radius: 5px;
+    }
+
+    /* Final overview section */
+    #finalOverview {
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #333;
+    }
+
+    .winningEvent {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Poll Section -->
+  <div id="poll" class="container text-center my-5">
+    <h2>Vote for Your Favorite Event!</h2>
+    <p>Let us know which event excites you the most!</p>
+    <form id="pollForm">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="event" id="event1" value="Product Launch" />
+        <label class="form-check-label" for="event1">Product Launch</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="event" id="event2" value="Gala Dinner" />
+        <label class="form-check-label" for="event2">Gala Dinner</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="event" id="event3" value="Sports Meet" />
+        <label class="form-check-label" for="event3">Sports Meet</label>
+      </div>
+      <button type="submit">Submit Vote</button>
+    </form>
+
+    <div id="pollResult" class="mt-4">
+      <h4>Poll Results:</h4>
+
+      <!-- Bar chart for Product Launch -->
+      <p>Product Launch: <span id="result1">0</span> votes</p>
+      <div class="bar-container">
+        <div id="bar1" class="bar" style="width: 0%"></div>
+      </div>
+
+      <!-- Bar chart for Gala Dinner -->
+      <p>Gala Dinner: <span id="result2">0</span> votes</p>
+      <div class="bar-container">
+        <div id="bar2" class="bar" style="width: 0%"></div>
+      </div>
+
+      <!-- Bar chart for Sports Meet -->
+      <p>Sports Meet: <span id="result3">0</span> votes</p>
+      <div class="bar-container">
+        <div id="bar3" class="bar" style="width: 0%"></div>
+      </div>
+
+      <!-- Final overview result -->
+      <div id="finalOverview" style="display: none;">
+        <h3>Final Overview:</h3>
+        <p>Total Votes: <span id="totalVotes">0</span></p>
+        <p class="winningEvent" id="winningEvent">Winning Event: </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Poll Feature Script
+    const pollData = {
+      "Product Launch": 0,
+      "Gala Dinner": 0,
+      "Sports Meet": 0
+    };
+
+    // Handle form submission for voting
+    document
+      .getElementById("pollForm")
+      .addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent the form from reloading the page
+        const selectedEvent = document.querySelector('input[name="event"]:checked'); // Get the selected event
+
+        if (selectedEvent) {
+          // Update poll data
+          pollData[selectedEvent.value]++;
+          displayPollResults(); // Update results
+        } else {
+          alert("Please select an event to vote!");
+        }
+      });
+
+    // Function to display poll results with animated bar chart
+    function displayPollResults() {
+      // Show the poll results section
+      document.getElementById("pollResult").style.display = "block";
+
+      // Display individual event vote counts
+      document.getElementById("result1").textContent = pollData["Product Launch"];
+      document.getElementById("result2").textContent = pollData["Gala Dinner"];
+      document.getElementById("result3").textContent = pollData["Sports Meet"];
+
+      // Calculate the maximum number of votes to scale the bars
+      const maxVotes = Math.max(
+        pollData["Product Launch"],
+        pollData["Gala Dinner"],
+        pollData["Sports Meet"]
+      );
+
+      // Function to animate the bar width
+      animateBar("bar1", pollData["Product Launch"], maxVotes);
+      animateBar("bar2", pollData["Gala Dinner"], maxVotes);
+      animateBar("bar3", pollData["Sports Meet"], maxVotes);
+
+      // Display the total votes
+      const totalVotes = pollData["Product Launch"] + pollData["Gala Dinner"] + pollData["Sports Meet"];
+      document.getElementById("totalVotes").textContent = totalVotes;
+
+      // Determine and display the winning event
+      const winningEvent = getWinningEvent();
+      document.getElementById("winningEvent").textContent = `Winning Event: ${winningEvent}`;
+      document.getElementById("finalOverview").style.display = "block"; // Show final overview
+    }
+
+    // Function to animate bar width based on votes
+    function animateBar(barId, votes, maxVotes) {
+      const bar = document.getElementById(barId);
+      const width = (votes / maxVotes) * 100; // Calculate width percentage based on votes
+      let currentWidth = 0;
+
+      const interval = setInterval(() => {
+        if (currentWidth < width) {
+          currentWidth++;
+          bar.style.width = currentWidth + "%";
+          bar.textContent = currentWidth + "%"; // Display the percentage in the bar
+        } else {
+          clearInterval(interval);
+        }
+      }, 30); // Update width every 30ms
+    }
+
+    // Function to determine the winning event
+    function getWinningEvent() {
+      const maxVotes = Math.max(
+        pollData["Product Launch"],
+        pollData["Gala Dinner"],
+        pollData["Sports Meet"]
+      );
+
+      if (pollData["Product Launch"] === maxVotes) {
+        return "Product Launch";
+      } else if (pollData["Gala Dinner"] === maxVotes) {
+        return "Gala Dinner";
+      } else {
+        return "Sports Meet";
+      }
+      window.location.href = 'home.html';
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback Form</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      background-image: linear-gradient(to bottom right, #af7ee8, #7fa2dd);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .feedback-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      max-width: 480px;
+      width: 100%;
+      animation: fadeIn 1.2s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .feedback-container h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.8em;
+      color: #333;
+    }
+
+    .rating {
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    .rating label {
+      font-size: 2rem;
+      color: #ddd;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .rating input {
+      display: none;
+    }
+
+    .rating input:checked~label,
+    .rating label:hover,
+    .rating label:hover~label {
+      color: #ffc107;
+    }
+
+    .feedback-container textarea {
+      width: 100%;
+      height: 120px;
+      padding: 15px;
+      padding-left: 0px;
+      padding-right: 5px;
+      margin: 15px 0;
+      border: 1px solid #ddd;
+      border-radius: 18px;
+      resize: none;
+      font-size: 1rem;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: border-color 0.3s ease;
+    }
+
+    .feedback-container textarea:focus {
+      border-color: #6a11cb;
+      outline: none;
+      box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .feedback-container button {
+      width: 100%;
+      padding: 12px 20px;
+      background-color: #6a11cb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .feedback-container button:hover {
+      background-color: #4e0c96;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .feedback-container button:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .feedback-container .footer-note {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 0.9em;
+      color: #777;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="feedback-container">
+    <h1>We Value Your Feedback</h1>
+    <form>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br>
+    <label for="phone">Phone Number:</label>
+    <input type="text" id="phone" name="phone" required><br>
+    <label for="venue">Venue:</label>
+    <input type="text" id="venue" name="venue" required><br>
+    <label for="event">Event:</label>
+    <input type="text" id="event" name="event" required><br>
+ class="needs-validation" novalidate onsubmit="redirectToHome(event)">
+      <div class="rating">
+        <input type="radio" id="star1" name="rating" value="1" required>
+        <label for="star1">&#9733;</label>
+        <input type="radio" id="star2" name="rating" value="2">
+        <label for="star2">&#9733;</label>
+        <input type="radio" id="star3" name="rating" value="3">
+        <label for="star3">&#9733;</label>
+        <input type="radio" id="star4" name="rating" value="4">
+        <label for="star4">&#9733;</label>
+        <input type="radio" id="star5" name="rating" value="5">
+        <label for="star5">&#9733;</label>
+      </div>
+      <textarea name="feedback" placeholder="Let us know your thoughts..." required></textarea>
+      <button type="submit">Submit Feedback</button>
+    </form>
+    <div class="footer-note">Thank you for your feedback!!</div>
+  </div>
+
+  <script>
+    (function () {
+      'use strict'
+      const forms = document.querySelectorAll('.needs-validation')
+      Array.from(forms).forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          form.classList.add('was-validated')
+
+          window.location.href = 'project_home.html';
+        }, false)
+      })
+    })()
+
+  </script>
+</body>
+</html>
